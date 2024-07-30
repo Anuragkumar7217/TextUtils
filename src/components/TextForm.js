@@ -22,9 +22,7 @@ export default function TextForm(props) {
     }
 
     const handleCopy = () => {
-        let text = document.getElementById("myBox");
-        text.select();
-        navigator.clipboard.writeText(text.value);
+        navigator.clipboard.writeText(text);
         props.showAlert("Text copied.", "success");
     }
 
@@ -41,14 +39,14 @@ export default function TextForm(props) {
                 <div className="mb-2">
                     <textarea className="form-control" style={{backgroundColor: props.mode==='light'?'white':'#404040', color: props.mode==='light'?'black':'white'}} value={text} onChange={handleOnChange} id="myBox" rows="6"></textarea>
                 </div>
-                <button className="btn btn-primary m-1" onClick={handleUpClick}>Convert to UPPERCASE</button>
-                <button className="btn btn-primary m-1" onClick={handleLoClick}>Convert to LOWERCASE</button>
-                <button className="btn btn-primary m-1" onClick={handleClearClick}>Clear</button>
-                <button className="btn btn-primary m-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
-                <button className="btn btn-primary m-1" onClick={handleCopy}>Copy Text</button>
+                <button disabled={text.length===0} className="btn btn-primary m-1" onClick={handleUpClick}>Convert to UPPERCASE</button>
+                <button disabled={text.length===0} className="btn btn-primary m-1" onClick={handleLoClick}>Convert to LOWERCASE</button>
+                <button disabled={text.length===0} className="btn btn-primary m-1" onClick={handleClearClick}>Clear</button>
+                <button disabled={text.length===0} className="btn btn-primary m-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+                <button disabled={text.length===0} className="btn btn-primary m-1" onClick={handleCopy}>Copy Text</button>
             
                 <h2>Your text summary:</h2>
-                <p>{text.split(" ").filter((element)=>{return element.length!=0}).length} words and {text.length} characters</p>
+                <p>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters</p>
                 <h2>Preview</h2>
                 <p>{text.length>0?text:"Enter something in the above textbox to preview it here."}</p>
             </div>
